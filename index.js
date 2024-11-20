@@ -1,12 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const Product = require('./models/product.model')
+const cors = require('cors');
 const productRoute = require('./routes/product.route')
 const app = express()
 // ZrYclDLLP0zEGLiK
 // anushka3002
 
 //middleware
+app.use(cors({
+    origin: 'http://localhost:3000',
+}));
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
