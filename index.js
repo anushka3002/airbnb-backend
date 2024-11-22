@@ -1,8 +1,19 @@
 const express = require('express')
 const mongoose = require('mongoose')
+require('dotenv').config();
+const cloudinary = require('cloudinary').v2;
 const cors = require('cors');
 const productRoute = require('./routes/product.route')
 const app = express()
+const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // ZrYclDLLP0zEGLiK
 // anushka3002
 
@@ -13,7 +24,28 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: 'images', 
+        allowed_formats: ['jpg', 'png', 'jpeg', 'webp'], 
+    },
+});
+
+const upload = multer({ storage: storage });
+
 app.use("/api/products", productRoute)
+
+app.post('/upload', upload.array('images', 10), (req, res) => {
+    if (!req.files || req.files.length === 0) {
+        return res.status(400).json({ success: false, message: 'No files uploaded.' });
+    }
+    const imageUrls = req.files.map(file => file.path);
+    res.status(200).json({
+        success: true,
+        urls: imageUrls,
+    });
+});
 
 app.get('/', (req, res) => {
     res.send('Hello from node API server et')

@@ -5,18 +5,49 @@ const ProductSchema = mongoose.Schema({
         type: String,
         required: [true,'Product name is required']
     },
-    quantity: {
-        type: Number,
-        required: true,
-        default: 0
+    desc: {
+        type: String,
+        required: true
     },
     price: {
         type: Number,
         required: true,
         default: 0
     },
-    image: {
+    reviews: {
+        type: Number,
+        required: true
+    },
+    guests: {
+        type: Number,
+        required: true
+    },
+    bedrooms: {
+        type: Number,
+        required: false
+    },
+    beds: {
+        type: Number,
+        required: false
+    },
+    rooms: {
+        type: Number,
+        required: false
+    },
+    amenities: {
+        type: Array,
+        required: true
+    },
+    location: {
         type: String,
+        required: true
+    },
+    hostedBy: {
+        type: String,
+        required: true,
+    },
+    images: {
+        type: Array,
         required: false
     },
 },
