@@ -50,6 +50,14 @@ const ProductSchema = mongoose.Schema({
         type: Array,
         required: false
     },
+    nearby: {
+        type: String,
+        required: false
+    },
+    bathrooms: {
+        type: Number,
+        required: false
+    }
 },
 {
     timestamps: true,

@@ -4,6 +4,7 @@ require('dotenv').config();
 const cloudinary = require('cloudinary').v2;
 const cors = require('cors');
 const productRoute = require('./routes/product.route')
+const registerRoute = require('./routes/register.route')
 const app = express()
 const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
@@ -35,6 +36,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage: storage });
 
 app.use("/api/products", productRoute)
+app.use("/api/register", registerRoute)
 
 app.post('/upload', upload.array('images', 10), (req, res) => {
     if (!req.files || req.files.length === 0) {
